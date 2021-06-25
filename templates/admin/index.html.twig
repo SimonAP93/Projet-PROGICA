@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="container">
+{% for message in app.flashes('success') %}
+    <div class="alert alert-success">
+        <p>{{ message }}</p>
+    </div>
+{% endfor %}
+<div class="row">
+    <a href="{{path('admin_new')}}" class="btn btn-success col-3  my-4 py-3">Create</a>
+</div>
+
+<table class="table table-stripped">
+<thead>
+    <th>#id</th>
+    <th>Name</th>
+    <th>Action</th>
+</thead>
+<tbody>
+{% for gite in gites %}
+<tr>
+    <td>{{gite.id}}</td>
+    <td>{{gite.name}}</td>
+    <td >
+    <a href="{{path("admin_edit", {'id': gite.id})}}" class="btn btn-warning ">Edit</a>
+    <a href="{{path("admin_remove", {'id': gite.id})}}" class="btn btn-danger ">Remove</a>
+    </td>
+    
+    
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div class='row'>
+{{ knp_pagination_render(gites,'twitter_bootstrap_v4_pagination.html.twig') }}
+</div>
+</div>
+{% endblock %}

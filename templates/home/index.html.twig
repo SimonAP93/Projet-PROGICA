@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<h1>Hello</h1>
+   <div class="row">
+    {% for gite in gites %}
+    <div class="card mx-auto my-4" style="width: 18rem;">
+        {% if gite.imageName %}
+  <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="...">
+{% else %}
+  <img src="images/img/home.jpg" class="card-img-top" alt="...">
+
+{% endif %}
+        <div class="card-body">
+            <h5 class="card-title">{{gite.name}}</h5>
+            <p class="card-text"><small>{{gite.city}}</small></p>
+            <p class="card-text">{{gite.description}}</p>
+            <p class="card-text"><small
+                    class="text-muted">{{gite.createdAt |format_datetime('short', 'none', locale='fr')}}</small></p>
+        </div>
+            <a href="{{path('browse_show', {'id': gite.id})}}" class="btn btn-primary m-3">See more</a>
+    </div>
+    {% endfor %}</div></div>
+
+
+
+{% endblock %}

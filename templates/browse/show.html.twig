@@ -1,0 +1,47 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-md-6">
+        <table class="table table-stripped">
+            <tbody>
+                <tr>
+                    <th>Name</th>
+                    <td>{{gite.name}}</td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>{{gite.city}}</td>
+                </tr>
+                <tr>
+                    <th>Surface</th>
+                    <td>{{gite.surface}}</td>
+                </tr>
+                <tr>
+                    <th>Rooms</th>
+                    <td>{{gite.rooms}}</td>
+                </tr>
+                <tr>
+                    <th>Alonimals</th>
+                    {% if gite.animals %}
+                    <td>Accepted</td>
+                    {% else %}
+                    <td>Refused</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <th>Equipements</th>
+                    <td>
+                        {% for equip in gite.equipements %}
+                        <li>{{ equip.name }}</li>
+                        {% endfor %}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
