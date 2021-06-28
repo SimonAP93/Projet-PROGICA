@@ -3,15 +3,19 @@
 namespace App\Controller\Gite;
 
 use App\Entity\Gite;
+
 use App\Entity\Search;
+use App\Entity\Contact;
 use App\Form\SearchType;
+use App\Form\ContactType;
 use App\Repository\GiteRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Notification\ContactNotification;
 use Knp\Component\Pager\PaginatorInterface;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Container5409Exm\PaginatorInterface_82dac15;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GiteController extends AbstractController
@@ -29,6 +33,7 @@ class GiteController extends AbstractController
     }
 
     private GiteRepository $repo;
+    private EntityManagerInterface $em;
 
     public function __construct(GiteRepository $repo,  EntityManagerInterface $em)
     {
@@ -64,10 +69,25 @@ class GiteController extends AbstractController
     /**
      * @Route("/Browse/{id}", name="browse_show")
      */
-    public function show(Gite $gite)
+    public function show(Gite $gite, Request $request, ContactNotification $notification)
     {
+        $contact = new Contact();
+        $contact->setGite($gite);
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $notification->notify($contact);
+            
+            $this->addFlash("success" , "Your request is sent successfuly");
+            return $this->redirectToRoute('browse_show',[
+                'id' =>$gite->getId(),
+            ]);
+        }
+
         return $this->render('browse/show.html.twig', [
-            'gite' => $gite
+            'gite' => $gite,
+            'form' => $form->createView()
         ]);
     }
 
