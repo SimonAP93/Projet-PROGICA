@@ -9,7 +9,7 @@
     </div>
 {% endfor %}
 <div class="row">
-    <a href="{{path('admin_new')}}" class="btn btn-success col-3  my-4 py-3">Create</a>
+    <a href="{{path('admin_new')}}" class="btn btn-primary col-3  my-4 py-2">Create</a>
 </div>
 
 <table class="table table-stripped">
@@ -24,7 +24,7 @@
     <td>{{gite.id}}</td>
     <td>{{gite.name}}</td>
     <td >
-    <a href="{{path("admin_edit", {'id': gite.id})}}" class="btn btn-warning ">Edit</a>
+    <a href="{{path("admin_edit", {'id': gite.id})}}" class="btn btn-primary ">Edit</a>
     <a href="{{path("admin_remove", {'id': gite.id})}}" class="btn btn-danger ">Remove</a>
     </td>
     

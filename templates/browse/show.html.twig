@@ -3,55 +3,82 @@
 {% block body %}
 
 <div class="container">
-{% for message in app.flashes('success') %}
+    {% for message in app.flashes('success') %}
     <div class="flash alert alert-success">
         <p>{{ message }}</p>
     </div>
-{% endfor %}
-<div class="row">
-
-    <div class="col-md-6">
-        <table class="table table-stripped">
-            <tbody>
-                <tr>
-                    <th>Name</th>
-                    <td>{{gite.name}}</td>
-                </tr>
-                <tr>
-                    <th>City</th>
-                    <td>{{gite.city}}</td>
-                </tr>
-                <tr>
-                    <th>Surface</th>
-                    <td>{{gite.surface}}</td>
-                </tr>
-                <tr>
-                    <th>Rooms</th>
-                    <td>{{gite.rooms}}</td>
-                </tr>
-                <tr>
-                    <th>Alonimals</th>
-                    {% if gite.animals %}
-                    <td>Accepted</td>
-                    {% else %}
-                    <td>Refused</td>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <th>Equipements</th>
-                    <td>
-                        {% for equip in gite.equipements %}
-                        <li>{{ equip.name }}</li>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    {% endfor %}
+    <div class="row show_img m-auto p-5">
+        {% if gite.imageName %}
+        <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="...">
+        {% else %}
+        <img src="images/img/home.jpg" class="card-img-top " alt="...">
+        {% endif %}
     </div>
-    {{ form_start(form) }}
-    {{ form_rest(form) }}
-    <button type="submit" class="btn btn-primary">Send</button>
-    {{ form_end(form) }}
-</div></div>
+    <div class="row pb-5">
+        <div class="col-md-5">
+            <table class="table table-stripped">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{gite.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>City</th>
+                        <td>{{gite.city}}</td>
+                    </tr>
+                    <tr>
+                        <th>Surface</th>
+                        <td>{{gite.surface}}m²</td>
+                    </tr>
+                    <tr>
+                        <th>Rooms</th>
+                        <td>{{gite.rooms}}</td>
+                    </tr>
+                    <tr>
+                        <th>Animals</th>
+                        {% if gite.animals %}
+                        <td>Accepted</td>
+                        {% else %}
+                        <td>Refused</td>
+                        {% endif %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5 ms-auto">
+            <h4>Equipements :</h4>
+            <table class="table table-stripped">
+                <tbody>
+                    {% for equip in gite.equipements %}
+                    <tr>
+                        <td>{{ equip.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+    </div>
+</div>
+    <div class="container m-auto">
+        <div class="row">
+        <h2>Request a reservation</h2></div>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-3">{{ form_row(form.firstName) }}</div>
+            <div class="col-3">{{ form_row(form.lastName) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-3">{{ form_row(form.email) }}</div>
+            <div class="col-3">{{ form_row(form.phone) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.message) }}</div>
+        </div>
+        <button type="submit" class="btn btn-primary mb-5">Send</button>
+        {{ form_end(form) }}
+    </div>
 
 {% endblock %}

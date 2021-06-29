@@ -1,3 +1,4 @@
+{% set route_name = app.request.attributes.get('_route') %}
 <!DOCTYPE html>
 <html>
 
@@ -30,21 +31,22 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{path('home')}}">Home</a>
+                        <a {% if route_name == "home" %} class="nav-link active" {% else %} class="nav-link" {% endif %} aria-current="page" href="{{path('home')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path('browse_index')}}">Browse Gites</a>
+                        <a {% if route_name == "browse_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} class="nav-link" href="{{path('browse_index')}}">Browse Gites</a>
                     </li>
                     {% if is_granted('ROLE_ADMIN') %}    
                     <li class="nav-item">
-                        <a class="nav-link" href="{{path('admin_index')}}">Dashboard</a>
+                        <a {% if route_name == "admin_index" %} class="nav-link active" {% else %} class="nav-link" {% endif %} class="nav-link" href="{{path('admin_index')}}">Dashboard</a>
                     </li>
                     {% endif %}
                 </ul>
                 <ul class="navbar-nav ms-auto">
                 {% if app.user %}
                     <li class="nav-item ">
-                        <a class="nav-link" href="{{path('app_logout')}}">Logout</a>
+                        
+                        <a class="nav-link" href="{{path('app_logout')}}"> <span>{{ app.user.username }} | </span>Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item ">
@@ -55,6 +57,7 @@
             </div>
         </div>
     </nav>
+
     {% block body %}
     {% endblock %}
 </body>

@@ -3,3 +3,22 @@ body {
 }
 
 
+#equipements{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.show_img{
+    width: 60rem;
+}
+
+.home_container{
+    background-color: rgba(212, 210, 210, 0.281);
+}
+
+
+#search_container{
+    background-color: rgba(212, 210, 210, 0.281);
+
+}

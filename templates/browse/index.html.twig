@@ -2,36 +2,52 @@
 
 {% block body %}
 
-<div class="container">
-{{ form_start(form) }}
-<div class="row">
-<div class="col-3">{{ form_row(form.minSurface) }}</div>
-<div class="col-3">{{ form_row(form.minBedrooms) }}</div>
-<div class="col-3">{{ form_row(form.postalCode) }}</div>
-<div class="col-3 mt-auto">{{ form_row(form.animals) }}</div>
-<div class="col-2">{{ form_row(form.equipements) }}</div>
-</div>
-{{ form_end(form) }}
-<div class="row">
-{% for gite in gites %}
-<div class="card mx-auto my-4" style="width: 18rem;" >
-{% if gite.imageName %}
-  <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="...">
-{% else %}
-  <img src="images/img/home.jpg" class="card-img-top" alt="...">
-
-{% endif %}
-  <div class="card-body">
-    <h5 class="card-title">{{gite.name}}</h5>
-    <p class="card-text"><small>{{gite.city}}</small></p>
-    <p class="card-text">{{gite.description}}</p>
-    <p class="card-text"><small class="text-muted">{{gite.createdAt |format_datetime('short', 'none', locale='fr')}}</small></p>
+  <div class="container mw-100" id="search_container">
+    <div class="row">
+      <p class="m-3">
+        <button class="btn btn-primary p-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample"
+          aria-expanded="false" aria-controls="collapseExample">
+          Search filters
+        </button>
+      </p>
+      <div class="collapse mb-4" id="collapseExample">
+        <div class="card card-body">
+          <h3>Filters:</h3>
+          {{ form_start(form) }}
+          <div class="row">
+            <div class="col-3">{{ form_row(form.minSurface) }}</div>
+            <div class="col-3">{{ form_row(form.minBedrooms) }}</div>
+            <div class="col-3">{{ form_row(form.postalCode) }}</div>
+            <div class="col-3 mt-auto">{{ form_row(form.animals) }}</div>
+            <div class="col-10 equipements">{{ form_row(form.equipements) }}</div>
+          </div>
+          {{ form_end(form) }}
+        </div>
+      </div>
+    </div>
   </div>
-    <a href="{{path('browse_show', {'id': gite.id})}}" class="btn btn-primary m-3">See more</a>
-</div>
-{% endfor %}
-</div>
-{{ knp_pagination_render(gites,'twitter_bootstrap_v4_pagination.html.twig') }}
+<div class="container">
+  <div class="row">
+    {% for gite in gites %}
+    <div class="card mx-auto my-4" style="width: 18rem;">
+      {% if gite.imageName %}
+      <img src="{{ vich_uploader_asset(gite, 'imageFile') }}" class="card-img-top" alt="...">
+      {% else %}
+      <img src="images/img/home.jpg" class="card-img-top" alt="...">
+
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title">{{gite.name}}</h5>
+        <p class="card-text"><small>{{gite.city}}</small></p>
+        <p class="card-text">{{gite.description}}</p>
+        <p class="card-text"><small
+            class="text-muted">{{gite.createdAt |format_datetime('short', 'none', locale='fr')}}</small></p>
+      </div>
+      <a href="{{path('browse_show', {'id': gite.id})}}" class="btn btn-primary m-3">See more</a>
+    </div>
+    {% endfor %}
+  </div>
+  {{ knp_pagination_render(gites,'twitter_bootstrap_v4_pagination.html.twig') }}
 </div>
 
 {% endblock %}
