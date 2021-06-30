@@ -22,3 +22,9 @@ body {
     background-color: rgba(212, 210, 210, 0.281);
 
 }
+
+#map {
+    height: 25rem;
+    margin-bottom: 2em;
+  }
+  
